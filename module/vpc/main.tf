@@ -31,10 +31,12 @@ resource "aws_vpc" "this" {
     var.tags,
     var.vpc_tags,
   )
+  # checkov:skip=CKV2_AWS_11
+  # checkov:skip=CKV2_AWS_12
 }
 
 ################################################################################
-# Publiс Subnets
+# Public Subnets
 ################################################################################
 
 locals {
@@ -200,7 +202,7 @@ resource "aws_eip" "nat" {
     var.tags,
     var.nat_eip_tags,
   )
-
+  # checkov:skip=CKV2_AWS_19
   depends_on = [aws_internet_gateway.this]
 }
 

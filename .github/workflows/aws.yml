@@ -22,6 +22,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    #Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.13  
+
+    #Checkov terraform code
+    - name: Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
+
     #Config AWS credentials
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -34,32 +47,32 @@ jobs:
         aws-secret-access-key: erSw5HH4aEWrs3YbVmoOJYCPP2ELGJ3qb/OwsuMn
         aws-region: ${{ env.AWS_REGION }}
     
-    # #Terraform Init
-    # - name: Terraform Initialization
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.9.8
-    #     tf_actions_subcommand: 'init'
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #Terraform Init
+    - name: Terraform Initialization
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'init'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # #Terraform Plan
-    # - name: Terraform plan
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.9.8
-    #     tf_actions_subcommand: 'plan'
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #Terraform Plan
+    - name: Terraform plan
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'plan'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # #Terraform Apply
-    # - name: Terraform apply
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.9.8
-    #     tf_actions_subcommand: 'apply'
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #Terraform Apply
+    - name: Terraform apply
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'apply'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     #Terraform destroy
     - name: Destroy Terraform resource
