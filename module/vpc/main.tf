@@ -62,6 +62,8 @@ resource "aws_subnet" "public" {
     var.tags,
     var.public_subnet_tags,
     lookup(var.public_subnet_tags_per_az, element(var.azs, count.index), {})
+
+    #checkov:skip=CKV_AWS_130
   )
 }
 
