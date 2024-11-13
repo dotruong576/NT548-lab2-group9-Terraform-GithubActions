@@ -46,7 +46,7 @@ module "security_groups" {
 module "ec2"{
   source = "./module/ec2"
   ami_id = "ami-0e86e20dae9224db8"
-  key_name = "test2"
+  key_name = "group9"
   public_subnet_id = module.vpc.public_subnets[0]
   private_subnet_id = module.vpc.private_subnets[0]
   public_sg = module.security_groups.public_security_group_id
