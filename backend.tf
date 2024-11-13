@@ -1,3 +1,15 @@
+terraform {
+    backend "s3" {
+    bucket = "s3statebackend-group9"
+    dynamodb_table = "state-lock"
+    key = "global/mystatefile/terraform.tfstate"
+    region = "us-east-1"
+    encrypt = true
+  }
+}
+
+
+
 #create s3
 resource "aws_s3_bucket" "mybucket" {
     bucket = "s3statebackend-group9"
