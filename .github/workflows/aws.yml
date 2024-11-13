@@ -2,7 +2,7 @@ name: Deploy AWS Infrastructure
 
 on:
   push:
-    branches: [ "Kien" ]
+    branches: [ "Main" ]
 
 env:
   AWS_REGION: us-east-1
@@ -39,13 +39,9 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        # aws-region: ${{ env.AWS_REGION }}
-
-        aws-access-key-id: AKIA4DMVQHFMGWIGZB5M
-        aws-secret-access-key: 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
-        aws-region: ${{ env.AWS_REGION }}
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{ env.AWS_REGION }}
     
     #Terraform Init
     - name: Terraform Initialization
