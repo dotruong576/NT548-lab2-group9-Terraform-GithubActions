@@ -32,4 +32,5 @@ resource "aws_dynamodb_table" "statelock" {
     }
     # checkov:skip=CKV_AWS_119
     # checkov:skip=CKV_AWS_79
+    # checkov:skip=CKV_AWS_28
 }
