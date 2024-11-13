@@ -1,0 +1,87 @@
+name: Deploy AWS Infrastructure
+
+on:
+  push:
+    branches: [ "Kien" ]
+
+env:
+  AWS_REGION: us-east-1
+  
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+
+    steps:
+    #Checkout the code
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    #Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8  
+
+    #Checkov terraform code
+    - name: Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
+
+    #Config AWS credentials
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # aws-region: ${{ env.AWS_REGION }}
+
+        aws-access-key-id: AKIA4DMVQHFMGWIGZB5M
+        aws-secret-access-key: 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
+        aws-region: ${{ env.AWS_REGION }}
+    
+    #Terraform Init
+    - name: Terraform Initialization
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'init'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #Terraform Plan
+    - name: Terraform plan
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'plan'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #Terraform Apply
+    - name: Terraform apply
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'apply'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #Terraform destroy
+    - name: Destroy Terraform resource
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 1.9.8
+        tf_actions_subcommand: 'destroy'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+    
