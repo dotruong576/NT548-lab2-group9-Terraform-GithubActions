@@ -2,7 +2,7 @@ name: Deploy AWS Infrastructure
 
 on:
   push:
-    branches: [ "Main" ]
+    branches: [ "main" ]
 
 env:
   AWS_REGION: us-east-1
