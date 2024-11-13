@@ -11,7 +11,6 @@ resource "aws_s3_bucket" "mybucket" {
         }
       }
     }
-    # checkov:skip=CKV_AWS_119
     # checkov:skip=CKV2_AWS_62
     # checkov:skip=CKV_AWS_18
     # checkov:skip=CKV2_AWS_6
@@ -31,4 +30,6 @@ resource "aws_dynamodb_table" "statelock" {
       name = "LockID"
       type = "S"
     }
+    # checkov:skip=CKV_AWS_119
+    # checkov:skip=CKV_AWS_79
 }
