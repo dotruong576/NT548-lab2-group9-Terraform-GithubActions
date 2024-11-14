@@ -1,18 +1,7 @@
-# terraform {
-#     backend "s3" {
-#     bucket = "s3statebackend-group9"
-#     dynamodb_table = "state-lock"
-#     key = "global/mystatefile/terraform.tfstate"
-#     region = "us-east-1"
-#     encrypt = true
-#   }
-# }
-
-
-
 #create s3
 resource "aws_s3_bucket" "mybucket" {
-    bucket = "s3statebackend-group9"
+    bucket = "s3statebackend-group9-3183"
+    force_destroy = true
     versioning {
       enabled = true
     }
@@ -45,4 +34,14 @@ resource "aws_dynamodb_table" "statelock" {
     # checkov:skip=CKV_AWS_119
     # checkov:skip=CKV_AWS_79
     # checkov:skip=CKV_AWS_28
+}
+
+terraform {
+    backend "s3" {
+    bucket = "s3statebackend-group9-3183"
+    dynamodb_table = "state-lock"
+    key = "global/mystatefile/terraform.tfstate"
+    region = "us-east-1"
+    encrypt = true
+  }
 }

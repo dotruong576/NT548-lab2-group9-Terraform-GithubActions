@@ -57,9 +57,13 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: ${{ env.AWS_REGION }} 
+        #  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #  aws-region: ${{ env.AWS_REGION }} 
+
+        aws-access-key-id: AKIARZDBIDVYMQM7UI64
+        aws-secret-access-key: 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
+        aws-region: ${{ env.AWS_REGION }}
     
     #Terraform Init
     - name: Terraform Initialization
@@ -87,6 +91,12 @@ jobs:
         tf_actions_subcommand: 'apply'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    #Terraform Init -reconfigure
+    - name: Reinitialize Terraform with S3 backend
+      run: |
+        echo 'terraform { backend "s3" { bucket = "s3statebackend-group9-3183" dynamodb_table = "state-lock" key = "global/mystatefile/terraform.tfstate" region = "us-east-1" encrypt = true } }' > backend.tf
+        terraform init -reconfigure
 
     #Terraform destroy
     - name: Destroy Terraform resource
