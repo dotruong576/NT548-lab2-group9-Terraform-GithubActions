@@ -27,4 +27,4 @@ resource "aws_s3_bucket" "group9_bucket" {
 #     region = "us-east-1"
 #     encrypt = true
 #   }
-# }
+# }     
