@@ -110,7 +110,7 @@ jobs:
             encrypt = true
           }
         }' > backend.tf
-        yes | terraform init -reconfigure
+        terraform init -migrate-state -force-copy
 
     # #Reinitialize Terraform with S3 backend
     # - name: Reinitialize Terraform with S3 backend
