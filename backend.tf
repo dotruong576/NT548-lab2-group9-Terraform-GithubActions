@@ -20,22 +20,6 @@ resource "aws_s3_bucket" "mybucket" {
     # checkov:skip=CKV2_AWS_61
 
 }
-
-#create dynamodb
-resource "aws_dynamodb_table" "statelock" {
-    name = "state-lock"
-    billing_mode = "PAY_PER_REQUEST"
-    hash_key = "LockID"
-
-    attribute {
-      name = "LockID"
-      type = "S"
-    }
-    # checkov:skip=CKV_AWS_119
-    # checkov:skip=CKV_AWS_79
-    # checkov:skip=CKV_AWS_28
-}
-
 # terraform {
 #     backend "s3" {
 #     bucket = "s3statebackend-group9-3183"
