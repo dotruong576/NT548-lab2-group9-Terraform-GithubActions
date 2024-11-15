@@ -1,5 +1,5 @@
 #create s3
-resource "aws_s3_bucket" "mybucket" {
+resource "aws_s3_bucket" "group9_bucket" {
     bucket = "s3statebackend-group9-3183"
     force_destroy = true
     versioning {
