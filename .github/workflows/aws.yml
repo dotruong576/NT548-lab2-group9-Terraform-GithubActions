@@ -98,6 +98,8 @@ jobs:
       run: |
         sudo chmod -R u+w .terraform
         sudo chown -R $USER:$USER .terraform
+        sudo chmod -R u+w terraform.tfstate
+        sudo chown -R $USER:$USER terraform.tfstate
         sudo rm -rf .terraform
         echo '
         terraform {
