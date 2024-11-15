@@ -101,7 +101,7 @@ jobs:
         sudo chmod -R u+w terraform.tfstate
         sudo chown -R $USER:$USER terraform.tfstate
         sudo rm -rf .terraform
-        echo '
+        cat <<EOF > backend.tf
         terraform {
             backend "s3" {
             bucket = "s3statebackend-group9-3183"
@@ -109,8 +109,9 @@ jobs:
             region = "us-east-1"
             encrypt = true
           }
-        }' > backend.tf
-        terraform init -reconfigure -input=false
+        }
+        EOF
+        terraform init -reconfigure
 
     # #Reinitialize Terraform with S3 backend
     # - name: Reinitialize Terraform with S3 backend
