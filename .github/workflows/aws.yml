@@ -110,7 +110,7 @@ jobs:
             encrypt = true
           }
         }' > backend.tf
-        terraform init
+        yes | terraform init -reconfigure
 
     # #Reinitialize Terraform with S3 backend
     # - name: Reinitialize Terraform with S3 backend
@@ -130,4 +130,3 @@ jobs:
         tf_actions_subcommand: 'destroy'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
