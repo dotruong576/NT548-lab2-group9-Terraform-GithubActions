@@ -93,25 +93,32 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-    #Reinitialize Terraform with S3 backend
+    #Add file tfstate to S3 backend
     - name: Reinitialize Terraform with S3 backend
       run: |
         sudo chmod -R u+w .terraform
         sudo chown -R $USER:$USER .terraform
         sudo rm -rf .terraform
-        echo 'terraform {
-                  backend "s3" {
-                  bucket = "s3statebackend-group9-3183"
-                  key    = "global/mystatefile/terraform.tfstate"
-                  region = "us-east-1"
-                  encrypt = true
-                }
-              }' > backend.tfterraform init -reconfigure
+        echo '
+        terraform {
+            backend "s3" {
+            bucket = "s3statebackend-group9-3183"
+            key    = "global/mystatefile/terraform.tfstate"
+            region = "us-east-1"
+            encrypt = true
+          }
+        }' > backend.tf
+        terraform init -reconfigure
+
+    #Reinitialize Terraform with S3 backend
+    - name: Reinitialize Terraform with S3 backend
+      run: | 
+        terraform init -reconfigure
     
     #Remove s3 bucket state
     - name: Remove s3 bucket state
       run: |
-        terraform state rm aws_s3_bucket.mybucket
+        terraform state rm aws_s3_bucket.group9_bucket
 
     #Terraform destroy
     - name: Destroy Terraform resource
