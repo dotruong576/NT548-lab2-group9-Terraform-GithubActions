@@ -94,7 +94,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     #Add file tfstate to S3 backend
-    - name: Reinitialize Terraform with S3 backend
+    - name: Add file tfstate to S3 backend
       run: |
         sudo chmod -R u+w .terraform
         sudo chown -R $USER:$USER .terraform
@@ -110,12 +110,12 @@ jobs:
             encrypt = true
           }
         }' > backend.tf
-        terraform init -reconfigure
+        terraform init -reconfigure -input=false
 
-    #Reinitialize Terraform with S3 backend
-    - name: Reinitialize Terraform with S3 backend
-      run: | 
-        terraform init -reconfigure
+    # #Reinitialize Terraform with S3 backend
+    # - name: Reinitialize Terraform with S3 backend
+    #   run: | 
+    #     terraform init -reconfigure
     
     #Remove s3 bucket state
     - name: Remove s3 bucket state
