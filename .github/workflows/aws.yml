@@ -142,14 +142,24 @@ jobs:
          aws-region: ${{ env.AWS_REGION }} 
 
     
-    #Terraform Init
-    - name: Terraform Initialization
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: 1.9.8
-        tf_actions_subcommand: 'init'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #Using remote state from S3 backend
+    - name: Using remote state from S3 backend
+      run: |
+        sudo chmod -R u+w .terraform
+        sudo chown -R $USER:$USER .terraform
+        sudo chmod -R u+w terraform.tfstate
+        sudo chown -R $USER:$USER terraform.tfstate
+        sudo rm -rf .terraform
+        echo '
+        terraform {
+            backend "s3" {
+            bucket = "s3statebackend-group9-3183"
+            key    = "global/mystatefile/terraform.tfstate"
+            region = "us-east-1"
+            encrypt = true
+          }
+        }' > backend.tf
+        terraform init
     
     #Terraform destroy
     - name: Destroy Terraform resource
