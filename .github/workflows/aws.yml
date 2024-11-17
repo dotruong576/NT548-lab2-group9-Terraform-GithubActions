@@ -135,8 +135,7 @@ jobs:
          aws-access-key-id: AKIARZDBIDVYMQM7UI64
          aws-secret-access-key: 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
          aws-region: ${{ env.AWS_REGION }} 
-
-    
+  
     #Using remote state from S3 backend
     - name: Using remote state from S3 backend
       run: |
