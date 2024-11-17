@@ -27,7 +27,7 @@ jobs:
         python-version: 3.8
    
   test:
-    name: Checkov test
+    name: Test
     runs-on: ubuntu-latest
     needs: build
     environment: production
